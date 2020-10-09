@@ -1,0 +1,91 @@
+@import "../base/_shared.scss";
+
+.numpad {
+  display: flex;
+  flex-direction: column;
+
+
+  &.default-blue {
+    color: $color-input-number;
+  }
+
+  &.second {
+    color: $numpad-second-color;
+  }
+
+  &.third {
+    color: $numpad-third-color;
+  }
+
+  &.halffade {
+    opacity: 0.5;
+  }
+
+  ul.numpad-row {
+    display: flex;
+    list-style-type: none;
+  }
+
+  &-item {
+    position: relative;
+    width: 12vh;
+    text-align: center;
+    background-color: $color-light-1;
+    font-family: $numbers;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: .75rem 1.25rem;
+    border: 1px solid rgba(0, 0, 0, .125);
+    font-weight: 700;
+
+    &:hover {
+      background-color: $color-board-sharp;
+      outline-color: $color-board-sharp;
+      border-color: $color-board-sharp;
+
+      span.badge {
+
+        background-color: $color-board-sharp;
+        color: $color-number;
+      }
+    }
+
+    &:active {
+      background-color: $numpad-active-background;
+      outline-color: $numpad-active-background;
+      border-color: $numpad-active-background;
+
+      span.badge {
+        background-color: $numpad-active-background;
+        color: $color-number;
+      }
+    }
+
+    span.badge {
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      background-color: $color-light-1;
+      color: $color-number;
+
+
+      display: inline-block;
+      padding: .25em .4em;
+      font-size: 75%;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: .25rem;
+      transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+      &-light {
+        color: #212529;
+        background-color: #f8f9fa;
+      }
+    }
+
+
+  }
+}

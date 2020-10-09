@@ -1,0 +1,93 @@
+/**
+*!RESET
+
+*/
+
+html {
+  font-size: 62.5%;
+
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+/**
+*!Variables */
+
+
+//? LIGHT THEME COLORS
+
+//* Main Back ground colors
+$color-light-1: #fffce5;
+
+//*Modal Colors
+$color-modal-background : #fae5b8d3;
+$color-modal-text: #4c3b78cc;
+
+$color-modal-buttons: #d4b97ee3;
+$color-modal-btn-text : #736697;
+
+//* Board Colors
+$color-board-sharp: #EFF3EA;
+$color-number: #d4b97ee7;
+$color-input-number: #4c3b78cc;
+
+$color-wrong-input: #e15f41;
+
+//*Board highlights
+$highlight-clicked: #dcd297e7;
+$highlight-same: #ff7a73;
+$highlight-peers: #fae5b8e5;
+$highlight-same-squares: #fff6b2;
+
+//*Alert colors
+$alert-background: #e2f0bc;
+$alert-btn-bg: #BACD86;
+$alert-btn-text: #F9FCF3;
+
+//*Numpad Colors
+$numpad-active-background: #dfe7d4;
+$numpad-second-color: #60A36C;
+$numpad-third-color: #D4847E;
+
+//*Footer
+$footer-background: #2B2E53;
+$footer-body: #C3A580;
+
+//*Fonts
+$numbers : 'Arvo',
+serif;
+$font-modal: 'Playfair Display',
+serif;
+
+/**
+*! TYPOGRAPHY
+*/
+
+.body {
+  font-family: "Arvo", serif;
+}
+
+.board td {
+  font-family: $numbers;
+  font-weight: 700;
+  color: $color-number;
+  font-size: 2rem;
+
+  &.unsolved {
+    color: $color-input-number;
+
+    &.wrong-input {
+      color: $color-wrong-input;
+    }
+  }
+}

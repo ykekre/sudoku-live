@@ -1,3 +1,5 @@
+@import "../base/_shared.scss";
+
 .container {
   height: 100vh;
   display: grid;
@@ -19,8 +21,11 @@
     grid-area: sidebar;
   }
 
-  .num-pad {
+  .num-pad-section {
     grid-area: numpad;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   footer {
