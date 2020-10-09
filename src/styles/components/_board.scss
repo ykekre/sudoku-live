@@ -1,0 +1,17 @@
+.board {
+  height: 63vh;
+  width: 63vh;
+
+  tr {
+    height: 11.111%;
+
+  }
+
+  td {
+    width: 11.1%;
+
+
+    text-align: center;
+    background-color: rgba(250, 229, 184, .9);
+  }
+}

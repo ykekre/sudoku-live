@@ -1,0 +1,34 @@
+.container {
+  height: 100vh;
+  display: grid;
+
+
+  header {
+    grid-area: header;
+  }
+
+  section {
+    grid-area: board;
+    grid-column: 2/5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .side-bar {
+    grid-area: sidebar;
+  }
+
+  .num-pad {
+    grid-area: numpad;
+  }
+
+  footer {
+    grid-area: footer
+  }
+
+  grid-template-areas: "header header header header header header"
+  ". board board board sidebar ."
+  ". numpad numpad numpad . ."
+  "footer footer footer footer footer footer";
+}
