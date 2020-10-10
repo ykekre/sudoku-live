@@ -72,33 +72,33 @@ export default class Puzzle {
         break;
     }
 
-    return this.board;
+    return this.transformPuzzle(this.board);
   }
 
-  /*  parsePuzzle() {
-    this.puzzleString = this.board
-      .map((cell) => (isNull(cell) ? 0 : cell))
-      .join("");
-  } */
-
-  solvePuzzle() {
-    console.log(this.board);
-    //  this.solvedPuzzle = sudoku.solvepuzzle(this.board);
-
-    return this.solvedPuzzle;
+  solvedBoard() {
+    return this.transformPuzzle(this.solvedPuzzle, true);
   }
 
-  transformPuzzle() {
+  transformPuzzle(puzzleArr, isSolution = false) {
     const board2D = Array(9).fill(null);
 
     for (let row = 0; row < 9; row++) {
       board2D[row] = [];
       for (let i = row * 9; i < (row + 1) * 9; i++) {
-        board2D[row].push(this.board[i]);
+        puzzleArr[i] === null
+          ? board2D[row].push(
+              isSolution
+                ? puzzleArr[i]
+                : { values: [puzzleArr[i]], isMutable: true }
+            )
+          : board2D[row].push(
+              isSolution
+                ? puzzleArr[i]
+                : { values: [puzzleArr[i]], isMutable: false }
+            );
       }
     }
 
-    console.log(board2D);
     return board2D;
   }
 }

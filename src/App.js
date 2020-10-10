@@ -1,23 +1,15 @@
 import React from "react";
-import Board from "./components/Board.js";
-import Numpad from "./components/Numpad.js";
 
-import "./styles/layout/_layout.scss";
+import Game from "./Game";
+
+import { GameProvider } from "./contexts/game.context";
 
 function App() {
   return (
     <div className="App">
-      <div className="container">
-        <header></header>
-        <section>
-          <Board />
-        </section>
-        <div className="side-bar"></div>
-        <div className="num-pad-section">
-          <Numpad />
-        </div>
-        <footer></footer>
-      </div>
+      <GameProvider>
+        <Game />
+      </GameProvider>
     </div>
   );
 }
