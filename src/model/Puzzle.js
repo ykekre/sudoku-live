@@ -37,7 +37,9 @@ export default class Puzzle {
     while (true) {
       let test = this.getPuzzle();
       let rating = this.getRating(test);
-      this.solvedPuzzle = sudoku.solvepuzzle(test);
+      this.solvedPuzzle = sudoku
+        .solvepuzzle(test)
+        .map((el) => (el === null ? null : el + 1));
       if (rating > 0.75 && rating < 2) {
         this.board = test.map((el) => (el === null ? null : el + 1));
         return;
@@ -49,7 +51,9 @@ export default class Puzzle {
     while (true) {
       let test = this.getPuzzle();
       let rating = this.getRating(test);
-      this.solvedPuzzle = sudoku.solvepuzzle(test);
+      this.solvedPuzzle = sudoku
+        .solvepuzzle(test)
+        .map((el) => (el === null ? null : el + 1));
       if (rating > 2.5) {
         this.board = test.map((el) => (el === null ? null : el + 1));
         return;

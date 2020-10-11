@@ -43,10 +43,10 @@ function SimpleDialog(props) {
 
         <ListItem
           button
-          onClick={() => handleListItemClick("difficult")}
-          key={"difficult"}
+          onClick={() => handleListItemClick("hard")}
+          key={"hard"}
         >
-          <ListItemText primary={"Difficult"} />
+          <ListItemText primary={"Hard"} />
         </ListItem>
       </List>
     </Dialog>
@@ -60,18 +60,15 @@ SimpleDialog.propTypes = {
 };
 
 export default function SelectPuzzleTypeDialog({ startGame }) {
-  const [open, setOpen] = React.useState(true);
+  const { gameState } = useContext(GameContext);
+
+  const [open, setOpen] = React.useState(gameState.showModal);
   const [selectedValue, setSelectedValue] = React.useState("easy");
-  const { setPuzzleState } = useContext(GameContext);
   const handleClose = (value) => {
     setOpen(false);
     setSelectedValue(value);
 
-    setPuzzleState({
-      difficulty: value,
-    });
-
-    startGame();
+    startGame(value);
   };
 
   return (

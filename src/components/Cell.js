@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { PuzzleContext } from "../contexts/puzzle.context";
 /**
  * The Sudoku position is 9x9.
  *    A1 A2 A3 A4 A5 A6 A7 A8 A9
@@ -52,14 +52,19 @@ import React from "react";
  * and so on...
  */
 
-const handleClick = (e) => {
-  console.log(`${e.target.id} cell clicked`);
-};
 const Cell = (props) => {
+  const handleClick = (e) => {
+    setPuzzleState({
+      ...puzzleState,
+      activeCell: e.target.id,
+    });
+  };
+  const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+  const { puzzleState, setPuzzleState } = useContext(PuzzleContext);
   const { i, j, values, isEditable } = props;
   return (
     <td
-      id={`${i}-${j}`}
+      id={`${rows[i]}${j + 1}`}
       className={isEditable ? "editable" : "non-editable"}
       onClick={handleClick}
     >

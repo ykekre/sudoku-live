@@ -1,17 +1,14 @@
 import React, { useContext } from "react";
-
 import Cell from "./Cell";
 import "../styles/base/_shared.scss";
 import "../styles/components/_board.scss";
-import { GameContext } from "../contexts/game.context";
+import { PuzzleContext } from "../contexts/puzzle.context";
 
-function Board(props) {
-  const { puzzleState, setPuzzleState } = useContext(GameContext);
+function Board() {
+  const { puzzleState } = useContext(PuzzleContext);
+
   const board = puzzleState.puzzle;
-  /* setPuzzleState({
-    puzzle: board,
-    solvedPuzzle: solvedBoard,
-  }); */
+
   const makeRow = (row) => {
     return Array(9)
       .fill(null)
@@ -21,6 +18,7 @@ function Board(props) {
           j={index}
           values={board[row][index].values}
           isEditable={board[row][index].isMutable}
+          key={`${row}-${index}`}
         />
       ));
   };
@@ -28,12 +26,16 @@ function Board(props) {
   const makeTable = () => {
     return Array(9)
       .fill(null)
-      .map((el, index) => <tr id={index}>{makeRow(index)}</tr>);
+      .map((el, index) => (
+        <tr id={index + 1} key={index}>
+          {makeRow(index)}
+        </tr>
+      ));
   };
 
   return (
     <table className="board">
-      <tbody> {makeTable()}</tbody>
+      <tbody>{makeTable()}</tbody>
     </table>
   );
 }

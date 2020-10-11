@@ -1,13 +1,10 @@
 import useLocalStorageState from "./useLocalStorageState";
 
 export default (initialValue) => {
-  const [puzzleState, setPuzzleState] = useLocalStorageState(
-    "sudoku",
-    initialValue
-  );
+  const [gameState, setGameState] = useLocalStorageState("game", initialValue);
 
   return {
-    puzzleState,
-    setPuzzleState,
+    gameState,
+    setGameState,
   };
 };
