@@ -1,54 +1,59 @@
 import React, { useContext } from "react";
-// import { GameContext } from "../contexts/game.context";
+import { NumpadContext } from "../contexts/numpad.context";
+import { PuzzleContext } from "../contexts/puzzle.context";
 import "../styles/components/_numpad.scss";
-const inputBlue = "#4c3b78cc";
-const second = "#60A36C";
-const third = "#D4847E";
 
-/* export function showBadgeCount() {
-  for (let index = 1; index < 10; index++) {
-    const digits = badgeCounter();
-    document.querySelector(`.count-${index}`).textContent = digits.get(index);
-  }
-}
-
-export function badgeCounter() {
-  const digits = new Map();
-
-  for (let i = 1; i < 10; i++) {
-    digits.set(i, 0);
-  }
-
-  for (const square of squares) {
-    if (!hasMorethanOneValue(square)) {
-      const digit = getSquareValue(square);
-      if (digit && digits.has(digit)) {
-        let count = digits.get(digit);
-        count = count + 1;
-        digits.set(digit, count);
-      }
-    }
-  }
-  return digits;
-} */
 const Numpad = () => {
-  // const { puzzleState, setPuzzleState } = useContext(GameContext);
+  const { numpadState, setNumpadState } = useContext(NumpadContext);
+  const { changeCellValue } = useContext(PuzzleContext);
 
+  const { editMode, color, inFocus } = numpadState;
   function handleClick(e) {
-    let value = e.target.id.toString();
+    const cell = e.target.closest(".numpad-item");
+    const cellID = cell.id.toString();
 
-    if (value.includes("digit")) {
-      value = parseInt(value.slice(-1));
+    if (cellID.includes("digit")) {
+      let numpadValue = parseInt(cellID.slice(-1));
+
+      setNumpadState({
+        ...numpadState,
+        value: numpadValue,
+      });
+
+      changeCellValue(numpadValue, editMode);
     }
 
-    // changeCellValue(value);
+    if (cellID.includes("color")) {
+      changeColor();
+    }
+
+    if (cellID.includes("draft")) {
+      setNumpadState({
+        ...numpadState,
+        editMode: !editMode,
+      });
+    }
   }
 
-  /* function changeCellValue(value) {
-    const{num}
-  } */
+  const changeColor = () => {
+    const colors = ["default-color", "second-color", "third-color"];
+
+    let curColorIndex = colors.findIndex((el) => el === color);
+
+    const newColor = colors[++curColorIndex % colors.length];
+
+    setNumpadState({
+      ...numpadState,
+      color: newColor,
+    });
+
+    return;
+  };
   return (
-    <div className="numpad  halffade default-blue" onClick={handleClick}>
+    <div
+      className={`numpad  ${inFocus ? "" : "halffade"} ${color}`}
+      onClick={handleClick}
+    >
       <ul className="numpad-row  ">
         <li className="numpad-item " id="digit-1">
           <span className="badge badge-light numpad-item--badge count-1">
@@ -106,19 +111,19 @@ const Numpad = () => {
           </span>
           9
         </li>
-        <li className="numpad-item " id="numpad-draft">
+        <li className="numpad-item " id="numpad-draft" onClick={handleClick}>
           <span className="fa-stack ">
             <i className="fas fa-edit fa-stack-1x"></i>
             <i
-              className="fas fa-ban fa-stack-2x"
+              className={`fas fa-ban fa-stack-2x ${editMode ? "fade" : ""}`}
               style={{ color: "Tomato" }}
             ></i>
           </span>
         </li>
         <li className="numpad-item " id="numpad-color">
-          <i className="fas fa-palette"></i>
+          <i className="fas fa-palette" onClick={handleClick}></i>
         </li>
-        <li className="numpad-item " id="numpad-clear">
+        <li className="numpad-item " id="numpad-clear" onClick={handleClick}>
           <i className="fas fa-backspace"></i>
         </li>
       </ul>

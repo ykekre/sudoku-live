@@ -5,15 +5,15 @@
   flex-direction: column;
 
 
-  &.default-blue {
+  &.default-color {
     color: $color-input-number;
   }
 
-  &.second {
+  &.second-color {
     color: $numpad-second-color;
   }
 
-  &.third {
+  &.third-color {
     color: $numpad-third-color;
   }
 
@@ -61,6 +61,11 @@
       }
     }
 
+    span.badge-light {
+      color: #212529;
+      background-color: #f8f9fa;
+    }
+
     span.badge {
       position: absolute;
       top: 1px;
@@ -80,12 +85,15 @@
       border-radius: .25rem;
       transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
-      &-light {
-        color: #212529;
-        background-color: #f8f9fa;
-      }
+
     }
 
+    & .fa-stack {
+      transition: opacity .3s ease;
 
+      & .fa-ban.fade {
+        opacity: 0;
+      }
+    }
   }
 }

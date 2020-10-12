@@ -5,7 +5,6 @@ import Puzzle from "./model/Puzzle";
 import "./styles/layout/_layout.scss";
 import { GameContext } from "./contexts/game.context";
 import { PuzzleContext } from "./contexts/puzzle.context";
-import { NumpadProvider } from "./contexts/numpad.context";
 import SelectPuzzleTypeDialog from "./components/SelectPuzzleTypeDialog.js";
 
 const Game = () => {
@@ -43,11 +42,11 @@ const Game = () => {
       </section>
 
       <div className="side-bar"></div>
-      <NumpadProvider>
-        <div className="num-pad-section">
-          <Numpad />
-        </div>
-      </NumpadProvider>
+
+      <div className="num-pad-section">
+        <Numpad />
+      </div>
+
       <footer></footer>
     </div>
   ) : (

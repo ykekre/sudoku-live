@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { PuzzleContext } from "../contexts/puzzle.context";
+import { NumpadContext } from "../contexts/numpad.context";
+import { getLetterFromIndex } from "../helperFunctions";
 /**
  * The Sudoku position is 9x9.
  *    A1 A2 A3 A4 A5 A6 A7 A8 A9
@@ -53,18 +55,24 @@ import { PuzzleContext } from "../contexts/puzzle.context";
  */
 
 const Cell = (props) => {
+  const { i, j, values, isEditable } = props;
+  const { puzzleState, setPuzzleState } = useContext(PuzzleContext);
+  const { numpadState, setNumpadState } = useContext(NumpadContext);
   const handleClick = (e) => {
     setPuzzleState({
       ...puzzleState,
       activeCell: e.target.id,
     });
+
+    setNumpadState({
+      ...numpadState,
+      inFocus: true,
+    });
   };
-  const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-  const { puzzleState, setPuzzleState } = useContext(PuzzleContext);
-  const { i, j, values, isEditable } = props;
+
   return (
     <td
-      id={`${rows[i]}${j + 1}`}
+      id={`${getLetterFromIndex(i)}${j + 1}`}
       className={isEditable ? "editable" : "non-editable"}
       onClick={handleClick}
     >
