@@ -10,6 +10,7 @@ export const PuzzleProvider = (props) => {
     puzzle: [],
     solvedPuzzle: [],
     activeCell: "",
+    peers: [],
   });
 
   const changeCellValue = (value, editMode) => {

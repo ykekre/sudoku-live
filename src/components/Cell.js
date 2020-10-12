@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
-import { PuzzleContext } from "../contexts/puzzle.context";
-import { NumpadContext } from "../contexts/numpad.context";
-import { getLetterFromIndex } from "../helperFunctions";
+import React from "react";
+
 /**
  * The Sudoku position is 9x9.
  *    A1 A2 A3 A4 A5 A6 A7 A8 A9
@@ -54,34 +52,28 @@ import { getLetterFromIndex } from "../helperFunctions";
  * and so on...
  */
 
-const Cell = (props) => {
-  const { i, j, values, isEditable } = props;
-  const { puzzleState, setPuzzleState } = useContext(PuzzleContext);
-  const { numpadState, setNumpadState } = useContext(NumpadContext);
-
+const Cell = ({
+  cell,
+  values,
+  isEditable,
+  highlightPeers,
+  isPeer,
+  isActive,
+}) => {
   /**
-   * * when a cell is clicked, we do the foll through the handleClick function
-   * ?1. set this cell as the activeCell
-   * ?2. we set numpad inFocus prop to true, so as to remove the faded look on numpad
+   * * when a cell is clicked,
+   ** call highlightPeers fn from parent
+   *
    */
   const handleClick = (e) => {
-    setPuzzleState({
-      ...puzzleState,
-      activeCell: e.target.id,
-    });
-
-    setNumpadState({
-      ...numpadState,
-      inFocus: true,
-    });
+    highlightPeers(cell);
   };
 
+  const classes = `${isEditable ? "editable" : "non-editable"}
+   ${isPeer ? "highlight-peers" : ""}
+   ${isActive ? "highlight-clicked" : ""}`;
   return (
-    <td
-      id={`${getLetterFromIndex(i)}${j + 1}`}
-      className={isEditable ? "editable" : "non-editable"}
-      onClick={handleClick}
-    >
+    <td id={cell} className={classes} onClick={handleClick}>
       {values.map((val) => val)}
     </td>
   );

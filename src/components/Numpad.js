@@ -3,11 +3,11 @@ import { NumpadContext } from "../contexts/numpad.context";
 import { PuzzleContext } from "../contexts/puzzle.context";
 import "../styles/components/_numpad.scss";
 
-const Numpad = () => {
+const Numpad = ({ isInFocus }) => {
   const { numpadState, setNumpadState } = useContext(NumpadContext);
   const { changeCellValue } = useContext(PuzzleContext);
 
-  const { editMode, color, inFocus } = numpadState;
+  const { editMode, color } = numpadState;
   /**
    * * The handleClick function will do the foll:
    * ?1. if user clicked on a number, get that value
@@ -73,7 +73,7 @@ const Numpad = () => {
   };
   return (
     <div
-      className={`numpad  ${inFocus ? "" : "halffade"} ${color}`}
+      className={`numpad  ${isInFocus ? "" : "halffade"} ${color}`}
       onClick={handleClick}
     >
       <ul className="numpad-row  ">

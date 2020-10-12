@@ -12,7 +12,7 @@
   td {
     width: 11.1%;
     text-align: center;
-    background-color: rgba(250, 229, 184, .9);
+    border: 1px solid rgba(0, 0, 0, 0.125);
 
     &.editable {
       cursor: pointer;
@@ -20,6 +20,18 @@
 
     &.non-editable {
       cursor: default;
+    }
+
+    &.highlight-peers {
+      background-color: $highlight-peers;
+    }
+
+    &.highlight-clicked {
+      background-color: $highlight-clicked;
+    }
+
+    &.highlight-same-squares {
+      background-color: $highlight-same-squares;
     }
   }
 }

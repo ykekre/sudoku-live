@@ -51,7 +51,7 @@ const Game = () => {
       <div className="side-bar"></div>
 
       <div className="num-pad-section">
-        <Numpad />
+        <Numpad isInFocus={puzzleState.activeCell.length > 0} />
       </div>
 
       <footer />
