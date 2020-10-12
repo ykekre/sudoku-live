@@ -58,6 +58,12 @@ const Cell = (props) => {
   const { i, j, values, isEditable } = props;
   const { puzzleState, setPuzzleState } = useContext(PuzzleContext);
   const { numpadState, setNumpadState } = useContext(NumpadContext);
+
+  /**
+   * * when a cell is clicked, we do the foll through the handleClick function
+   * ?1. set this cell as the activeCell
+   * ?2. we set numpad inFocus prop to true, so as to remove the faded look on numpad
+   */
   const handleClick = (e) => {
     setPuzzleState({
       ...puzzleState,

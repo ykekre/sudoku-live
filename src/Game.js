@@ -13,15 +13,22 @@ const Game = () => {
 
   const startGame = (difficulty) => {
     const puzzleObj = new Puzzle(difficulty);
+
+    //? A 2-D array(9x9) representation of a sudoku board
     const board = puzzleObj.setBoard();
+
+    //? 1-D array of puzzle with 81 values
     const plainPuzzleArr = puzzleObj.board;
 
+    //?A 2-D solved sudoku board
     const solvedBoard = puzzleObj.solvedBoard();
 
     setGameState({
       ...gameState,
 
       isGameOn: true,
+
+      //?boolean to decide whether to show puzzle selector dialog or not
       showModal: false,
       difficulty,
     });
@@ -35,7 +42,7 @@ const Game = () => {
   };
   return gameState.isGameOn ? (
     <div className="container">
-      <header></header>
+      <header />
 
       <section>
         <Board />
@@ -47,9 +54,10 @@ const Game = () => {
         <Numpad />
       </div>
 
-      <footer></footer>
+      <footer />
     </div>
   ) : (
+    //* If game is not on show the puzzle selector modal instead
     <SelectPuzzleTypeDialog startGame={startGame} />
   );
 };

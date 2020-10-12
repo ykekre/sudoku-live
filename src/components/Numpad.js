@@ -8,10 +8,20 @@ const Numpad = () => {
   const { changeCellValue } = useContext(PuzzleContext);
 
   const { editMode, color, inFocus } = numpadState;
+  /**
+   * * The handleClick function will do the foll:
+   * ?1. if user clicked on a number, get that value
+   * ?2. if user clicked on palette icon, change the color of all values inside numpad
+   * ?3. if user clicked on edit icon, toggle the edit mode state
+   */
+
   function handleClick(e) {
     const cell = e.target.closest(".numpad-item");
     const cellID = cell.id.toString();
 
+    /**
+     * * set numpad value
+     */
     if (cellID.includes("digit")) {
       let numpadValue = parseInt(cellID.slice(-1));
 
@@ -20,13 +30,22 @@ const Numpad = () => {
         value: numpadValue,
       });
 
+      /**
+       * * change the cell value to reflect this numpad value
+       */
       changeCellValue(numpadValue, editMode);
     }
 
+    /**
+     * * change the numpad values color
+     */
     if (cellID.includes("color")) {
       changeColor();
     }
 
+    /**
+     * * toggle the edit mode
+     */
     if (cellID.includes("draft")) {
       setNumpadState({
         ...numpadState,
@@ -40,6 +59,9 @@ const Numpad = () => {
 
     let curColorIndex = colors.findIndex((el) => el === color);
 
+    /**
+     * *pick the next color when user clicks on the palette icon
+     */
     const newColor = colors[++curColorIndex % colors.length];
 
     setNumpadState({
@@ -115,6 +137,9 @@ const Numpad = () => {
           <span className="fa-stack ">
             <i className="fas fa-edit fa-stack-1x"></i>
             <i
+              /**
+               * * if the editMode is false show the ban icon on top of the edit icon, otheriwse hide it
+               */
               className={`fas fa-ban fa-stack-2x ${editMode ? "fade" : ""}`}
               style={{ color: "Tomato" }}
             ></i>

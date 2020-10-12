@@ -16,7 +16,16 @@ function Board() {
         <Cell
           i={row}
           j={index}
+          /**
+           * ? array of values a cell can hold
+           *
+           */
           values={board[row][index].values}
+          /**
+           *
+           * ?if Cell is pre-populated it means its not editable
+           */
+
           isEditable={board[row][index].isMutable}
           key={`${row}-${index}`}
         />
