@@ -5,7 +5,7 @@ import "../styles/components/_numpad.scss";
 
 const Numpad = ({ isInFocus }) => {
   const { numpadState, setNumpadState } = useContext(NumpadContext);
-  const { changeCellValue, findDuplicatePeerCells } = useContext(PuzzleContext);
+  const { changeCellValue } = useContext(PuzzleContext);
 
   const { editMode, color } = numpadState;
   /**
@@ -35,8 +35,7 @@ const Numpad = ({ isInFocus }) => {
        * * & call findDuplicatePeerCells fn to highlight the peer cells
        * * having same values, which is not as per rules of sudoku
        */
-      changeCellValue(numpadValue, editMode);
-      findDuplicatePeerCells();
+      changeCellValue(numpadValue, editMode, color);
     }
 
     /**

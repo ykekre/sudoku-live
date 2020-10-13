@@ -26,3 +26,7 @@ export const getCoordinates = (cell) => {
 
   return [i, j];
 };
+
+export const getCellIDFromCoords = (i, j) => {
+  return `${getLetterFromIndex(i)}${j + 1}`;
+};

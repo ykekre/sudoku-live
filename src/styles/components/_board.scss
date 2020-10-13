@@ -30,6 +30,10 @@
       background-color: $highlight-clicked;
     }
 
+    &.highlight-alt-block {
+      background-color: $color-board-sharp;
+    }
+
     &.highlight-same-squares {
       background-color: $highlight-same-squares;
     }
@@ -37,5 +41,8 @@
     &.highlight-duplicates {
       background-color: $highlight-duplicate;
     }
+
+
+    @include input-font-colors;
   }
 }

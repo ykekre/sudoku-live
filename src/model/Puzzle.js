@@ -93,12 +93,12 @@ export default class Puzzle {
           ? board2D[row].push(
               isSolution
                 ? puzzleArr[i]
-                : { values: [puzzleArr[i]], isMutable: true }
+                : { values: [puzzleArr[i]], isMutable: true, valueColor: "" }
             )
           : board2D[row].push(
               isSolution
                 ? puzzleArr[i]
-                : { values: [puzzleArr[i]], isMutable: false }
+                : { values: [puzzleArr[i]], isMutable: false, valueColor: "" }
             );
       }
     }

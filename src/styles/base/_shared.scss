@@ -92,3 +92,21 @@ body {
     }
   }
 }
+
+/**
+*! MIXINS
+*/
+
+@mixin input-font-colors {
+  &.default-color {
+    color: $color-input-number;
+  }
+
+  &.second-color {
+    color: $numpad-second-color;
+  }
+
+  &.third-color {
+    color: $numpad-third-color;
+  }
+}

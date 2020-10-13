@@ -5,17 +5,7 @@
   flex-direction: column;
 
 
-  &.default-color {
-    color: $color-input-number;
-  }
-
-  &.second-color {
-    color: $numpad-second-color;
-  }
-
-  &.third-color {
-    color: $numpad-third-color;
-  }
+  @include input-font-colors;
 
   &.halffade {
     opacity: 0.5;

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Board from "./components/Board.js";
 import Numpad from "./components/Numpad.js";
 import Puzzle from "./model/Puzzle";
@@ -6,11 +6,17 @@ import "./styles/layout/_layout.scss";
 import { GameContext } from "./contexts/game.context";
 import { PuzzleContext } from "./contexts/puzzle.context";
 import SelectPuzzleTypeDialog from "./components/SelectPuzzleTypeDialog.js";
-
+import { unitlist } from "./model/vendor/sudoku";
 const Game = () => {
   const { gameState, setGameState } = useContext(GameContext);
   const { puzzleState, setPuzzleState, activeCell } = useContext(PuzzleContext);
 
+  const [blocks, setBlocks] = useState([
+    ...unitlist[19],
+    ...unitlist[21],
+    ...unitlist[23],
+    ...unitlist[25],
+  ]);
   const startGame = (difficulty) => {
     const puzzleObj = new Puzzle(difficulty);
 
@@ -45,7 +51,7 @@ const Game = () => {
       <header />
 
       <section>
-        <Board />
+        <Board blocks={blocks} />
       </section>
 
       <div className="side-bar"></div>

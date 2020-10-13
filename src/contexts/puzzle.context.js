@@ -1,6 +1,6 @@
 import React, { createContext, useState, useRef } from "react";
 import usePuzzleState from "../hooks/usePuzzleState";
-import { getCoordinates } from "../helperFunctions";
+import { getCoordinates, getCellIDFromCoords } from "../helperFunctions";
 
 export const PuzzleContext = createContext();
 
@@ -14,9 +14,10 @@ export const PuzzleProvider = (props) => {
   const [activeCell, setActiveCell] = useState("");
   const [peers, setPeers] = useState([]);
   const [duplicatePeerCells, setDuplicatePeerCells] = useState([]);
+  const [sameValueCells, setSameValueCells] = useState([]);
   const { puzzle } = puzzleState;
   const puzzleRef = useRef();
-
+  puzzleRef.current = puzzle;
   /**
    *
    * @param {value obtained from the numpad digit on user click} value
@@ -25,7 +26,7 @@ export const PuzzleProvider = (props) => {
    **This function changes the activeCell value to the value clicked by the user on numpad.
    **In process it also updates the puzzleState.puzzle prop
    */
-  const changeCellValue = (value, editMode) => {
+  const changeCellValue = (value, editMode, inputColor) => {
     const [i, j] = getCoordinates(activeCell);
     /**
      * * do this only if the current cell is editable otherwise return early
@@ -35,10 +36,14 @@ export const PuzzleProvider = (props) => {
         return row.map((cell, cellIndex) => {
           if (rowIndex === i && cellIndex === j) {
             if (!editMode) {
-              return { ...cell, values: [value] };
+              return { ...cell, values: [value], valueColor: inputColor };
             } else {
               //*if editMode is true, then a cell can hold multiple values
-              return { ...cell, values: [...cell.values, value] };
+              return {
+                ...cell,
+                values: [...cell.values, value],
+                valueColor: inputColor,
+              };
             }
           }
 
@@ -62,6 +67,9 @@ export const PuzzleProvider = (props) => {
         puzzle: updatedPuzzle,
       });
     }
+
+    findDuplicatePeerCells();
+    findSameValueCells();
     return;
   };
 
@@ -96,6 +104,47 @@ export const PuzzleProvider = (props) => {
 
     setDuplicatePeerCells([...duplicates.keys()]);
   };
+
+  /**
+   * * when a cell is clicked or the its value changes, this function will be called. It will return an array of cells which have the same value as the cell
+   */
+  const findSameValueCells = (cell = activeCell) => {
+    let sameValues = [];
+    const [i, j] = getCoordinates(cell);
+    const puzzle = puzzleRef.current;
+    /**
+     * * if the cell is empty set sameValueCells arr empty and return early
+     * *this is to avoid carryover of sameValueCells arr from prev render
+     * * when a blank cell is clicked
+     */
+    if (puzzle[i][j].values.includes(null)) {
+      setSameValueCells([]);
+      return;
+    }
+    const cellValues = puzzle[i][j].values;
+
+    puzzle.forEach((row, rowIndex) => {
+      row.forEach((col, colIndex) => {
+        for (const val of cellValues) {
+          if (col.values.includes(val)) {
+            sameValues.push(getCellIDFromCoords(rowIndex, colIndex));
+          }
+        }
+      });
+    });
+
+    /* sameValues = puzzle.map((row, index) => {
+      return row.map((col, colIndex) => {
+        for (const val of cellValues) {
+          if (col.values.includes(val)) {
+            return true;
+          }
+        }
+      });
+    }); */
+
+    setSameValueCells(sameValues);
+  };
   return (
     <PuzzleContext.Provider
       value={{
@@ -106,9 +155,10 @@ export const PuzzleProvider = (props) => {
         peers,
         setPeers,
         duplicatePeerCells,
-        setDuplicatePeerCells,
+        findSameValueCells,
         changeCellValue,
-        findDuplicatePeerCells,
+
+        sameValueCells,
       }}
     >
       {props.children}
