@@ -22,6 +22,10 @@
       cursor: default;
     }
 
+    &.highlight-alt-block {
+      background-color: $color-board-sharp;
+    }
+
     &.highlight-peers {
       background-color: $highlight-peers;
     }
@@ -30,9 +34,6 @@
       background-color: $highlight-clicked;
     }
 
-    &.highlight-alt-block {
-      background-color: $color-board-sharp;
-    }
 
     &.highlight-same-squares {
       background-color: $highlight-same-squares;

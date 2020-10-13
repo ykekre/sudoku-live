@@ -1,4 +1,4 @@
-import React, { createContext, useState, useRef } from "react";
+import React, { createContext, useState, useRef, useEffect } from "react";
 import usePuzzleState from "../hooks/usePuzzleState";
 import { getCoordinates, getCellIDFromCoords } from "../helperFunctions";
 
@@ -15,9 +15,32 @@ export const PuzzleProvider = (props) => {
   const [peers, setPeers] = useState([]);
   const [duplicatePeerCells, setDuplicatePeerCells] = useState([]);
   const [sameValueCells, setSameValueCells] = useState([]);
+  const [digitsValuesMap, setDigitsValuesMap] = useState(new Map());
   const { puzzle } = puzzleState;
   const puzzleRef = useRef();
   puzzleRef.current = puzzle;
+
+  useEffect(() => {
+    const digitsMap = new Map();
+
+    puzzle.forEach((row) => {
+      row.forEach((col) => {
+        const values = col.values;
+
+        if (!values.includes(null)) {
+          for (const val of values) {
+            if (digitsMap.has(val)) {
+              let count = digitsMap.get(val);
+              digitsMap.set(val, ++count);
+            } else {
+              digitsMap.set(val, 1);
+            }
+          }
+        }
+      });
+    });
+    setDigitsValuesMap(digitsMap);
+  }, [puzzle]);
   /**
    *
    * @param {value obtained from the numpad digit on user click} value
@@ -38,10 +61,20 @@ export const PuzzleProvider = (props) => {
             if (!editMode) {
               return { ...cell, values: [value], valueColor: inputColor };
             } else {
-              //*if editMode is true, then a cell can hold multiple values
+              /**
+               * *if editMode is true, then a cell can hold multiple values
+               * ?things to do:
+               * *1. if incoming value is already in values array then remove that element otherwise, add the value to the array
+               * */
+              let updatedValues = [];
+              if (cell.values.includes(value)) {
+                updatedValues = cell.values.filter((val) => val !== value);
+              } else {
+                updatedValues = [...cell.values, value];
+              }
               return {
                 ...cell,
-                values: [...cell.values, value],
+                values: updatedValues,
                 valueColor: inputColor,
               };
             }
@@ -157,7 +190,7 @@ export const PuzzleProvider = (props) => {
         duplicatePeerCells,
         findSameValueCells,
         changeCellValue,
-
+        digitsValuesMap,
         sameValueCells,
       }}
     >

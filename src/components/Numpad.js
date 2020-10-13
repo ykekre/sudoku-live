@@ -5,7 +5,7 @@ import "../styles/components/_numpad.scss";
 
 const Numpad = ({ isInFocus }) => {
   const { numpadState, setNumpadState } = useContext(NumpadContext);
-  const { changeCellValue } = useContext(PuzzleContext);
+  const { changeCellValue, digitsValuesMap } = useContext(PuzzleContext);
 
   const { editMode, color } = numpadState;
   /**
@@ -81,37 +81,37 @@ const Numpad = ({ isInFocus }) => {
       <ul className="numpad-row  ">
         <li className="numpad-item " id="digit-1">
           <span className="badge badge-light numpad-item--badge count-1">
-            0
+            {digitsValuesMap.get(0 + 1)}
           </span>
           1
         </li>
         <li className="numpad-item " id="digit-2">
           <span className="badge badge-light numpad-item--badge count-2">
-            0
+            {digitsValuesMap.get(1 + 1)}
           </span>
           2
         </li>
         <li className="numpad-item " id="digit-3">
           <span className="badge badge-light numpad-item--badge count-3">
-            0
+            {digitsValuesMap.get(2 + 1)}
           </span>
           3
         </li>
         <li className="numpad-item " id="digit-4">
           <span className="badge badge-light numpad-item--badge count-4">
-            0
+            {digitsValuesMap.get(3 + 1)}
           </span>
           4
         </li>
         <li className="numpad-item " id="digit-5">
           <span className="badge badge-light numpad-item--badge count-5">
-            0
+            {digitsValuesMap.get(4 + 1)}
           </span>
           5
         </li>
         <li className="numpad-item " id="digit-6">
           <span className="badge badge-light numpad-item--badge count-6">
-            0
+            {digitsValuesMap.get(5 + 1)}
           </span>
           6
         </li>
@@ -119,19 +119,19 @@ const Numpad = ({ isInFocus }) => {
       <ul className="numpad-row  ">
         <li className="numpad-item " id="digit-7">
           <span className="badge badge-light numpad-item--badge count-7">
-            0
+            {digitsValuesMap.get(6 + 1)}
           </span>
           7
         </li>
         <li className="numpad-item " id="digit-8">
           <span className="badge badge-light numpad-item--badge count-8">
-            0
+            {digitsValuesMap.get(7 + 1)}
           </span>
           8
         </li>
         <li className="numpad-item " id="digit-9">
           <span className="badge badge-light numpad-item--badge count-9">
-            0
+            {digitsValuesMap.get(8 + 1)}
           </span>
           9
         </li>
