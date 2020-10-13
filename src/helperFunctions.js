@@ -20,3 +20,9 @@ export const getIndexFromLetter = (letter) => {
     }
   }
 };
+export const getCoordinates = (cell) => {
+  const i = getIndexFromLetter(cell[0]);
+  const j = parseInt(cell[1]) - 1;
+
+  return [i, j];
+};

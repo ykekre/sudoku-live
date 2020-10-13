@@ -5,7 +5,7 @@ import "../styles/components/_numpad.scss";
 
 const Numpad = ({ isInFocus }) => {
   const { numpadState, setNumpadState } = useContext(NumpadContext);
-  const { changeCellValue } = useContext(PuzzleContext);
+  const { changeCellValue, findDuplicatePeerCells } = useContext(PuzzleContext);
 
   const { editMode, color } = numpadState;
   /**
@@ -34,6 +34,7 @@ const Numpad = ({ isInFocus }) => {
        * * change the cell value to reflect this numpad value
        */
       changeCellValue(numpadValue, editMode);
+      //findDuplicatePeerCells();
     }
 
     /**
