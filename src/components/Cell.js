@@ -59,6 +59,7 @@ const Cell = ({
   highlightPeers,
   isPeer,
   isActive,
+  isDuplicate,
 }) => {
   /**
    * * when a cell is clicked,
@@ -71,7 +72,8 @@ const Cell = ({
 
   const classes = `${isEditable ? "editable" : "non-editable"}
    ${isPeer ? "highlight-peers" : ""}
-   ${isActive ? "highlight-clicked" : ""}`;
+   ${isActive ? "highlight-clicked" : ""}
+   ${isDuplicate ? "highlight-duplicates" : ""}`;
   return (
     <td id={cell} className={classes} onClick={handleClick}>
       {values.map((val) => val)}

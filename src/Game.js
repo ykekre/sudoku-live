@@ -9,7 +9,7 @@ import SelectPuzzleTypeDialog from "./components/SelectPuzzleTypeDialog.js";
 
 const Game = () => {
   const { gameState, setGameState } = useContext(GameContext);
-  const { puzzleState, setPuzzleState } = useContext(PuzzleContext);
+  const { puzzleState, setPuzzleState, activeCell } = useContext(PuzzleContext);
 
   const startGame = (difficulty) => {
     const puzzleObj = new Puzzle(difficulty);
@@ -51,7 +51,7 @@ const Game = () => {
       <div className="side-bar"></div>
 
       <div className="num-pad-section">
-        <Numpad isInFocus={puzzleState.activeCell.length > 0} />
+        <Numpad isInFocus={activeCell.length > 0} />
       </div>
 
       <footer />

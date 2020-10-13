@@ -7,18 +7,22 @@ import { getLetterFromIndex } from "../helperFunctions";
 import { findPeers, unitlist, units } from "../model/vendor/sudoku";
 
 function Board() {
-  const { puzzleState, setPuzzleState } = useContext(PuzzleContext);
+  const {
+    puzzleState,
+    setPeers,
+    setActiveCell,
+    activeCell,
+    peers,
+    duplicatePeerCells,
+  } = useContext(PuzzleContext);
 
   const board = puzzleState.puzzle;
 
   const highlightPeersOfActiveCell = (cell) => {
     const peers = findPeers(cell);
 
-    setPuzzleState({
-      ...puzzleState,
-      peers,
-      activeCell: cell,
-    });
+    setPeers(peers);
+    setActiveCell(cell);
   };
   const makeRow = (row) => {
     return Array(9)
@@ -52,11 +56,16 @@ function Board() {
              * *To determine whether a cell is a peer cell or not
              * *to style these cells differently
              */
-            isPeer={puzzleState.peers.includes(cell)}
+            isPeer={peers.includes(cell)}
             /**
              * *To style an active cell differently
              */
-            isActive={puzzleState.activeCell === cell}
+            isActive={activeCell === cell}
+            /**
+             * *duplicate peer cells are the peer cells having same value
+             * * which are not allowed, so we style them differently to warn ** the user
+             */
+            isDuplicate={duplicatePeerCells.includes(cell)}
           />
         );
       });

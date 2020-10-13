@@ -33,5 +33,9 @@
     &.highlight-same-squares {
       background-color: $highlight-same-squares;
     }
+
+    &.highlight-duplicates {
+      background-color: $highlight-duplicate;
+    }
   }
 }

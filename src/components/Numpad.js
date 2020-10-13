@@ -32,9 +32,11 @@ const Numpad = ({ isInFocus }) => {
 
       /**
        * * change the cell value to reflect this numpad value
+       * * & call findDuplicatePeerCells fn to highlight the peer cells
+       * * having same values, which is not as per rules of sudoku
        */
       changeCellValue(numpadValue, editMode);
-      //findDuplicatePeerCells();
+      findDuplicatePeerCells();
     }
 
     /**
