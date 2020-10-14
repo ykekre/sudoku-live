@@ -6,7 +6,7 @@ export const PuzzleContext = createContext();
 
 export const PuzzleProvider = (props) => {
   const { puzzleState, setPuzzleState } = usePuzzleState({
-    plainPuzzleArr: [],
+    originalPuzzle: [],
     puzzle: [],
     solvedPuzzle: [],
   });
@@ -16,15 +16,19 @@ export const PuzzleProvider = (props) => {
   const [duplicatePeerCells, setDuplicatePeerCells] = useState([]);
   const [sameValueCells, setSameValueCells] = useState([]);
   const [digitsValuesMap, setDigitsValuesMap] = useState(new Map());
-  const { puzzle } = puzzleState;
+  const [isSolved, setIsSolved] = useState(false);
+  const { puzzle, solvedPuzzle, originalPuzzle } = puzzleState;
   const puzzleRef = useRef();
   puzzleRef.current = puzzle;
 
   useEffect(() => {
+    /**
+     * *Everytime puzzle is updated calculate the digits to values (in puzzle) map and use this mapping to update badges on numpad
+     */
     const digitsMap = new Map();
-
-    puzzle.forEach((row) => {
-      row.forEach((col) => {
+    let wrongValues = 0; //*counter for values which are not as per actual solved puzzle
+    puzzle.forEach((row, rowIndex) => {
+      row.forEach((col, colIndex) => {
         const values = col.values;
 
         if (!values.includes(null)) {
@@ -36,11 +40,24 @@ export const PuzzleProvider = (props) => {
               digitsMap.set(val, 1);
             }
           }
+
+          /**
+           * *If a cell has more than one value we do not need to evaluate
+           * * whether puzzle has been solved
+           */
+          if (values.length === 1) {
+            values[0] !== solvedPuzzle[rowIndex][colIndex] && wrongValues++;
+          }
         }
       });
     });
     setDigitsValuesMap(digitsMap);
-  }, [puzzle]);
+
+    /**
+     * *if no wrong values means puzzle has been solved
+     */
+    wrongValues === 0 ? setIsSolved(true) : setIsSolved(false);
+  }, [puzzle, solvedPuzzle]);
   /**
    *
    * @param {value obtained from the numpad digit on user click} value
@@ -178,6 +195,42 @@ export const PuzzleProvider = (props) => {
 
     setSameValueCells(sameValues);
   };
+
+  /**
+   * * Function will be called to render solved puzzle
+   */
+  const solvePuzzle = () => {
+    setPuzzleState({
+      ...puzzleState,
+      puzzle: puzzle.map((row, rowIndex) => {
+        return row.map((cell, cellIndex) => {
+          return {
+            ...cell,
+            values: [solvedPuzzle[rowIndex][cellIndex]],
+            valueColor: "",
+          };
+        });
+      }),
+    });
+  };
+
+  /**
+   * * Function will be called to undo any changes and render puzzle to its initial state
+   */
+  const resetPuzzle = () => {
+    setPuzzleState({
+      ...puzzleState,
+      puzzle: puzzle.map((row, rowIndex) => {
+        return row.map((cell, cellIndex) => {
+          return {
+            ...cell,
+            values: originalPuzzle[rowIndex][cellIndex].values,
+            valueColor: "",
+          };
+        });
+      }),
+    });
+  };
   return (
     <PuzzleContext.Provider
       value={{
@@ -192,6 +245,9 @@ export const PuzzleProvider = (props) => {
         changeCellValue,
         digitsValuesMap,
         sameValueCells,
+        isSolved,
+        resetPuzzle,
+        solvePuzzle,
       }}
     >
       {props.children}

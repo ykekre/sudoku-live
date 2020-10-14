@@ -31,7 +31,6 @@ const Game = () => {
 
     setGameState({
       ...gameState,
-
       isGameOn: true,
 
       //?boolean to decide whether to show puzzle selector dialog or not
@@ -44,6 +43,7 @@ const Game = () => {
       plainPuzzleArr,
       puzzle: board,
       solvedPuzzle: solvedBoard,
+      originalPuzzle: board,
     });
   };
   return gameState.isGameOn ? (
