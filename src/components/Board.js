@@ -4,7 +4,7 @@ import "../styles/base/_shared.scss";
 import "../styles/components/_board.scss";
 import { PuzzleContext } from "../contexts/puzzle.context";
 import { getLetterFromIndex } from "../helperFunctions";
-import { findPeers } from "../model/vendor/sudoku";
+import { findPeers, unitlist } from "../model/vendor/sudoku";
 
 /**
  * The Sudoku board is 9x9.
@@ -57,8 +57,13 @@ import { findPeers } from "../model/vendor/sudoku";
  *
  * and so on...
  */
-
-function Board({ blocks }) {
+const blocks = [
+  ...unitlist[19],
+  ...unitlist[21],
+  ...unitlist[23],
+  ...unitlist[25],
+];
+function Board() {
   const {
     puzzleState,
     setPeers,
@@ -74,26 +79,35 @@ function Board({ blocks }) {
 
   /**
    * @param {puzzle cell that was clicked} cell
-   * *This function will find out the peers of a cell
+   * *The below function will find out the peers of a cell
    * *i.e the cells in same row, column and unit
    * !This fn is passed down as a prop to Cell component
    */
   const findPeersOfActiveCell = (cell) => {
     const peers = findPeers(cell);
-
     setPeers(peers);
     setActiveCell(cell);
   };
 
   /**
    * @param {puzzle cell that was clicked} cell
-   * *This function will invoke the findSameValueCells fn
+   * *The below function will invoke the findSameValueCells fn
    * * which will set the arr of cells which have same value
    * *in the puzzle
    * !This fn is passed down as a prop to Cell component
    */
   const highlightSameCells = (cell) => {
     findSameValueCells(cell);
+  };
+
+  const makeTable = () => {
+    return Array(9)
+      .fill(null)
+      .map((el, index) => (
+        <tr id={index + 1} key={index}>
+          {makeRow(index)}
+        </tr>
+      ));
   };
 
   const makeRow = (row) => {
@@ -155,17 +169,6 @@ function Board({ blocks }) {
         );
       });
   };
-
-  const makeTable = () => {
-    return Array(9)
-      .fill(null)
-      .map((el, index) => (
-        <tr id={index + 1} key={index}>
-          {makeRow(index)}
-        </tr>
-      ));
-  };
-
   return (
     <table className="board">
       <tbody>{makeTable()}</tbody>

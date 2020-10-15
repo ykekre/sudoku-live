@@ -9,6 +9,7 @@ export const PuzzleProvider = (props) => {
     originalPuzzle: [],
     puzzle: [],
     solvedPuzzle: [],
+    ID: undefined,
   });
 
   const [activeCell, setActiveCell] = useState("");
@@ -81,11 +82,15 @@ export const PuzzleProvider = (props) => {
               /**
                * *if editMode is true, then a cell can hold multiple values
                * ?things to do:
-               * *1. if incoming value is already in values array then remove that element otherwise, add the value to the array
+               * *1. if incoming value is already in values array then remove that element
+               * *2. if there is a null, it means the cell is blank, so replace that null with value.
+               * *3. else, add the value to the values array
                * */
               let updatedValues = [];
               if (cell.values.includes(value)) {
                 updatedValues = cell.values.filter((val) => val !== value);
+              } else if (cell.values.includes(null)) {
+                updatedValues = [value];
               } else {
                 updatedValues = [...cell.values, value];
               }

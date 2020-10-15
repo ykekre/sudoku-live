@@ -1,11 +1,20 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import { GameContext } from "../contexts/game.context";
+
+const useStyles = makeStyles({
+  avatar: {
+    backgroundColor: blue[100],
+    color: blue[600],
+  },
+});
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
 
@@ -60,7 +69,7 @@ SimpleDialog.propTypes = {
 };
 
 export default function SelectPuzzleTypeDialog({ startGame }) {
-  const { gameState } = useContext(GameContext);
+  const { gameState, startNewGame } = useContext(GameContext);
 
   const [open, setOpen] = React.useState(gameState.showModal);
   const [selectedValue, setSelectedValue] = React.useState("easy");
@@ -68,7 +77,7 @@ export default function SelectPuzzleTypeDialog({ startGame }) {
     setOpen(false);
     setSelectedValue(value);
 
-    startGame(value);
+    startNewGame(value);
   };
 
   return (
