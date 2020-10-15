@@ -45,5 +45,9 @@
 
 
     @include input-font-colors;
+
+    &.highlight-wrong-input {
+      color: $color-wrong-input
+    }
   }
 }

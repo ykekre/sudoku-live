@@ -73,6 +73,7 @@ function Board() {
     duplicatePeerCells,
     findSameValueCells,
     sameValueCells,
+    wrongInputCells,
   } = useContext(PuzzleContext);
 
   const board = puzzleState.puzzle;
@@ -165,6 +166,10 @@ function Board() {
              * * highlight same value cells
              */
             isSameValue={sameValueCells.includes(cell)}
+            /**
+             * * highlight incorrect user input cells
+             */
+            isWrongInput={wrongInputCells.includes(cell)}
           />
         );
       });

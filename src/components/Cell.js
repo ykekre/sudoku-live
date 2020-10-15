@@ -12,6 +12,7 @@ const Cell = ({
   isSameValue,
   isAltBlock,
   color,
+  isWrongInput,
 }) => {
   /**
    * * when a cell is clicked,
@@ -29,6 +30,7 @@ const Cell = ({
    ${isDuplicate ? "highlight-duplicates" : " "}
    ${isSameValue ? "highlight-same-squares" : " "}
    ${isAltBlock ? "highlight-alt-block" : " "}
+   ${isWrongInput ? "highlight-wrong-input" : " "}
    ${color}`;
   return (
     <td id={cell} className={classes} onClick={handleClick}>

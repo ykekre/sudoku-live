@@ -16,6 +16,7 @@ export const PuzzleProvider = (props) => {
   const [peers, setPeers] = useState([]);
   const [duplicatePeerCells, setDuplicatePeerCells] = useState([]);
   const [sameValueCells, setSameValueCells] = useState([]);
+  const [wrongInputCells, setWrongInputCells] = useState([]);
   const [digitsValuesMap, setDigitsValuesMap] = useState(new Map());
   const [isSolved, setIsSolved] = useState(false);
   const { puzzle, solvedPuzzle, originalPuzzle } = puzzleState;
@@ -59,6 +60,7 @@ export const PuzzleProvider = (props) => {
      */
     wrongValues === 0 ? setIsSolved(true) : setIsSolved(false);
   }, [puzzle, solvedPuzzle]);
+
   /**
    *
    * @param {value obtained from the numpad digit on user click} value
@@ -123,6 +125,17 @@ export const PuzzleProvider = (props) => {
       });
     }
 
+    /**
+     * *if the user has used checkErrors feature, there may be some cells in
+     * * wrongInputCells array. If the activeCell is in this array we should remove this cell from the
+     * * wrongInputCells arr once the user has changed the cell value, so that its no longer colored red
+     */
+    if (wrongInputCells.includes(activeCell)) {
+      const idx = wrongInputCells.indexOf(activeCell);
+      wrongInputCells.splice(idx, 1);
+
+      setWrongInputCells(wrongInputCells);
+    }
     findDuplicatePeerCells();
     findSameValueCells();
     return;
@@ -236,6 +249,32 @@ export const PuzzleProvider = (props) => {
       }),
     });
   };
+
+  /**
+   * * Below function will be called to compare the current puzzle to the actual puzzle and highlight all the incorrect cells
+   */
+
+  const checkWrongUserInputs = () => {
+    let wrongCells = []; //*Array to hold all the incorrect cells, to style differently
+
+    puzzle.forEach((row, rowIndex) => {
+      row.forEach((col, colIndex) => {
+        const values = col.values;
+        /**
+         * ?We do not evaluate a cell if:
+         * *1. it doesn't hold any value
+         * *2. it has more than one value
+         */
+
+        if (!values.includes(null) && values.length === 1) {
+          values[0] !== solvedPuzzle[rowIndex][colIndex] &&
+            wrongCells.push(getCellIDFromCoords(rowIndex, colIndex));
+        }
+      });
+    });
+
+    setWrongInputCells(wrongCells);
+  };
   return (
     <PuzzleContext.Provider
       value={{
@@ -253,6 +292,8 @@ export const PuzzleProvider = (props) => {
         isSolved,
         resetPuzzle,
         solvePuzzle,
+        checkWrongUserInputs,
+        wrongInputCells,
       }}
     >
       {props.children}

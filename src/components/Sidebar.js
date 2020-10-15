@@ -13,7 +13,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Sidebar() {
   const classes = useStyles();
   const { prepareForNewGame } = useContext(GameContext);
-  const { resetPuzzle, solvePuzzle } = useContext(PuzzleContext);
+  const { resetPuzzle, solvePuzzle, checkWrongUserInputs } = useContext(
+    PuzzleContext
+  );
 
   const handleClick = (e, id) => {
     switch (id) {
@@ -29,13 +31,18 @@ export default function Sidebar() {
         solvePuzzle();
 
         break;
+
+      case "errors":
+        checkWrongUserInputs();
+
+        break;
       default:
         break;
     }
   };
 
   return (
-    <div className={`Sidebar classes.root`}>
+    <div className={`Sidebar ${classes.root}`}>
       {[
         { text: "New Puzzle", secondaryText: "Start a New Game", id: "new" },
         {
@@ -53,13 +60,8 @@ export default function Sidebar() {
           secondaryText: "See all incorrect inputs",
           id: "errors",
         },
-        {
-          text: "Get Hint",
-          secondaryText: "Fill up one random cell",
-          id: "hint",
-        },
       ].map((option) => (
-        <Option selection={handleClick} option={option} />
+        <Option selection={handleClick} option={option} key={option.id} />
       ))}
     </div>
   );
