@@ -1,0 +1,61 @@
+@import "../base/_shared.scss";
+
+.numpad {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  @include input-font-colors;
+
+  &.halffade {
+    opacity: 0.5;
+  }
+
+  &__item {
+    display: flex;
+    font-size: 3rem;
+    width: 33.3%;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+
+    .MuiBadge-anchorOriginTopRightRectangle {
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+    .MuiBadge-badge {
+      font-size: 1rem;
+    }
+  }
+
+  margin-top: 1rem;
+
+  .MuiListItem-root {
+    margin: 2rem;
+    justify-content: center;
+
+    padding: 0;
+  }
+
+  &__control {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    .control__options {
+      font-size: 3rem;
+      width: 33.3%;
+      margin: 0rem;
+
+      &--draft {
+        flex-shrink: 3;
+      }
+
+      & .fa-stack {
+        transition: opacity 0.3s ease;
+
+        & .fa-ban.fade {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}

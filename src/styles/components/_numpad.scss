@@ -2,7 +2,7 @@
 
 .numpad {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
 
   @include input-font-colors;
@@ -13,6 +13,7 @@
 
   ul.numpad-row {
     display: flex;
+    flex-direction: column;
     list-style-type: none;
   }
 

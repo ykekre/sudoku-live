@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import HeaderBar from "./components/AppBar.js";
 import Board from "./components/Board.js";
-import Numpad from "./components/Numpad.js";
 import Sidebar from "./components/Sidebar.js";
 import "./styles/layout/_layout.scss";
 import { GameContext } from "./contexts/game.context";
@@ -10,7 +9,7 @@ import SelectPuzzleTypeDialog from "./components/SelectPuzzleTypeDialog.js";
 import { Paper } from "@material-ui/core";
 const Game = () => {
   const { gameState } = useContext(GameContext);
-  const { puzzleState, setPuzzleState, activeCell } = useContext(PuzzleContext);
+  const { puzzleState, setPuzzleState } = useContext(PuzzleContext);
   const { puzzleObj, isGameOn, puzzleID } = gameState;
 
   useEffect(() => {
@@ -50,13 +49,9 @@ const Game = () => {
         </Paper>
       </section>
       <div className="side-bar">
-        <Paper elevation={3}>
+        <Paper elevation={2}>
           <Sidebar />
         </Paper>
-      </div>
-
-      <div className="num-pad-section">
-        <Numpad isInFocus={activeCell.length > 0} />
       </div>
 
       <footer />

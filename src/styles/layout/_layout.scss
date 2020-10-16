@@ -11,29 +11,29 @@
 
   section {
     grid-area: board;
-    grid-column: 2/5;
+    grid-column: 2/3;
     display: flex;
-    justify-content: center;
+
     align-items: center;
   }
 
   .side-bar {
     grid-area: sidebar;
+    width: 50%;
   }
 
-  .num-pad-section {
+ /*  .num-pad-section {
     grid-area: numpad;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+  } */
 
   footer {
     grid-area: footer
   }
 
-  grid-template-areas: "header header header header header header"
-  ". board board board sidebar ."
-  ". numpad numpad numpad . ."
-  "footer footer footer footer footer footer";
+  grid-template-areas: "header header header header"
+  ". board sidebar ."
+  "footer footer footer footer";
 }
