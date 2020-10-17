@@ -4,7 +4,6 @@
   height: 100vh;
   display: grid;
 
-
   header {
     grid-area: header;
   }
@@ -13,16 +12,18 @@
     grid-area: board;
     grid-column: 2/3;
     display: flex;
-
-    align-items: center;
+    width: 50vw;
+    height: 72vh;
+    overflow: hidden;
+    justify-content: flex-end;
   }
 
-  .side-bar {
-    grid-area: sidebar;
-    width: 50%;
+  .aside {
+    grid-area: aside;
+    width: 20vw;
   }
 
- /*  .num-pad-section {
+  /*  .num-pad-section {
     grid-area: numpad;
     display: flex;
     justify-content: center;
@@ -30,10 +31,11 @@
   } */
 
   footer {
-    grid-area: footer
+    grid-area: footer;
   }
 
-  grid-template-areas: "header header header header"
-  ". board sidebar ."
-  "footer footer footer footer";
+  grid-template-areas:
+    "header header header header"
+    ". board aside ."
+    "footer footer footer footer";
 }

@@ -1,0 +1,59 @@
+@import "../base/_shared.scss";
+
+.Dialog__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: $color-modal-background;
+  color: $color-modal-text;
+  padding: 2.5rem;
+  height: 100%;
+
+  .Dialog__title {
+    padding: 0;
+
+    .MuiTypography-h6 {
+      font-size: 3rem;
+      font-family: "Josefin Sans", sans-serif;
+      font-weight: 600;
+      color: $color-modal-text;
+    }
+  }
+
+  .Dialog__subheading {
+    font-family: "Josefin Sans", sans-serif;
+    color: $color-modal-text;
+  }
+}
+
+.Dialog__button__group {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  .button {
+    font-family: "Pacifico", cursive;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.7rem;
+    width: 24%;
+    align-self: center;
+    background-color: $color-modal-buttons;
+    color: $color-modal-btn-text;
+    border-color: $color-modal-buttons;
+    text-transform: none;
+    letter-spacing: 0.3rem;
+
+    padding: 0.5rem 3rem;
+
+    &:hover {
+      background-color: lighten($color-modal-buttons, 5%);
+    }
+
+    &:active {
+      background-color: darken($color-modal-buttons, 10%);
+    }
+  }
+}

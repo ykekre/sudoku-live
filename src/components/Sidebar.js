@@ -4,8 +4,6 @@ import { GameContext } from "../contexts/game.context";
 import { PuzzleContext } from "../contexts/puzzle.context";
 import "../styles/components/_sidebar.scss";
 import Option from "./Option";
-import Numpad2 from "./Numpad2";
-import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +18,7 @@ export default function Sidebar() {
     solvePuzzle,
     checkWrongUserInputs,
     activeCell,
+    revealCellValue,
   } = useContext(PuzzleContext);
 
   const handleClick = (e, id) => {
@@ -39,6 +38,11 @@ export default function Sidebar() {
 
       case "errors":
         checkWrongUserInputs();
+
+        break;
+
+      case "reveal":
+        revealCellValue();
 
         break;
       default:
@@ -65,11 +69,14 @@ export default function Sidebar() {
           secondaryText: "See all incorrect inputs",
           id: "errors",
         },
+        {
+          text: "Get Help",
+          secondaryText: "Reveal any cell's actual value",
+          id: "reveal",
+        },
       ].map((option) => (
         <Option selection={handleClick} option={option} key={option.id} />
       ))}
-      <Divider variant="middle" />
-      <Numpad2 isInFocus={activeCell.length > 0} />
     </div>
   );
 }

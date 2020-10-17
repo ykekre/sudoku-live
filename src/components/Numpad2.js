@@ -1,26 +1,29 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Badge from "@material-ui/core/Badge";
 import { NumpadContext } from "../contexts/numpad.context";
 import { PuzzleContext } from "../contexts/puzzle.context";
 import "../styles/components/_numpad2.scss";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 
 export default function Numpad2({ isInFocus }) {
-  const classes = useStyles();
   const { numpadState, setNumpadState } = useContext(NumpadContext);
-  const { changeCellValue, digitsValuesMap } = useContext(PuzzleContext);
+  const {
+    activeCell,
+    changeCellValue,
+    digitsValuesMap,
+    clearCellValue,
+  } = useContext(PuzzleContext);
 
   const { editMode, color } = numpadState;
 
+  const handleOnClickNum = (value) => {
+    if (activeCell.length > 0) changeCellValue(value, editMode, color);
+    else return;
+  };
+  /**
+   * *Below function cycles through three colors,when user clicks on the palette icon, and sets that color as the user input color and the font color for the numpad
+   */
   const changeColor = () => {
     const colors = ["default-color", "second-color", "third-color"];
 
@@ -39,13 +42,9 @@ export default function Numpad2({ isInFocus }) {
     return;
   };
   return (
-    <div
-      className={`numpad ${isInFocus ? "" : "halffade"} ${color} ${
-        classes.root
-      }`}
-    >
+    <div className={`numpad ${isInFocus ? "" : "halffade"} ${color} `}>
       <List aria-label="numpad" className="numpad__items">
-        {[1, 2, 3, 4, 5, 6].map((num) => {
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => {
           return (
             <Badge
               badgeContent={digitsValuesMap.get(num)}
@@ -54,35 +53,13 @@ export default function Numpad2({ isInFocus }) {
               /**
                * * On click invoke changeCellValue fn to change the cell value to user clicked number
                */
-              onClick={() => changeCellValue(num, editMode, color)}
+              onClick={() => handleOnClickNum(num)}
             >
               <ListItem
                 button
                 className={`numpad__item numpad__item--${num}`}
                 id={`digit-${num}`}
-                onClick={() => changeCellValue(num, editMode, color)}
-              >
-                {num}
-              </ListItem>
-            </Badge>
-          );
-        })}
-        {/* </List> */}
-        {/* <Divider orientation="vertical" flexItem /> */}
-        {/* <List className="numpad__columns"> */}
-        {[7, 8, 9].map((num) => {
-          return (
-            <Badge
-              badgeContent={digitsValuesMap.get(num)}
-              color="primary"
-              className={`numpad__item numpad__item__badge numpad__item--${num}`}
-              onClick={() => changeCellValue(num, editMode, color)}
-            >
-              <ListItem
-                button
-                className="numpad__item"
-                id={`digit-${num}`}
-                onClick={() => changeCellValue(num, editMode, color)}
+                onClick={() => handleOnClickNum(num)}
               >
                 {num}
               </ListItem>
@@ -126,6 +103,7 @@ export default function Numpad2({ isInFocus }) {
           button
           className="control__options control__options--clear"
           id="numpad__clear"
+          onClick={() => clearCellValue()}
         >
           <i className="fas fa-backspace"></i>
         </ListItem>

@@ -11,6 +11,10 @@
     opacity: 0.5;
   }
 
+  .MuiList-padding {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
   &__item {
     display: flex;
     font-size: 3rem;

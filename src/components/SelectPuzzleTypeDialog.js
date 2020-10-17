@@ -1,21 +1,23 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { blue } from "@material-ui/core/colors";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import { GameContext } from "../contexts/game.context";
+import "../styles/components/_dialogModal.scss";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles({
-  avatar: {
-    backgroundColor: blue[100],
-    color: blue[600],
+  root: {
+    /*  backgroundColor: "#fae5b8d3",
+    color: "#4c3b78cc", */
   },
 });
 function SimpleDialog(props) {
+  const classes = useStyles();
   const { onClose, selectedValue, open } = props;
 
   const handleClose = () => {
@@ -31,33 +33,48 @@ function SimpleDialog(props) {
       onClose={handleClose}
       aria-labelledby="simple-dialog-title"
       open={open}
+      className={`${classes.root}`}
     >
-      <DialogTitle id="simple-dialog-title">New Puzzle</DialogTitle>
-      <List>
-        <ListItem
-          button
-          onClick={() => handleListItemClick("easy")}
-          key={"easy"}
+      <div className="Dialog__container">
+        <DialogTitle id="simple-dialog-title" className="Dialog__title">
+          New Game
+        </DialogTitle>
+        <Typography variant="h4" gutterBottom className="Dialog__subheading">
+          Select Puzzle Difficulty
+        </Typography>
+        <ButtonGroup
+          variant="text"
+          color="primary"
+          aria-label="text primary button group"
+          className="Dialog__button__group"
         >
-          <ListItemText primary={"Easy"} />
-        </ListItem>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleListItemClick("easy")}
+            className="button button--1"
+          >
+            Easy
+          </Button>
 
-        <ListItem
-          button
-          onClick={() => handleListItemClick("medium")}
-          key={"medium"}
-        >
-          <ListItemText primary={"Medium"} />
-        </ListItem>
-
-        <ListItem
-          button
-          onClick={() => handleListItemClick("hard")}
-          key={"hard"}
-        >
-          <ListItemText primary={"Hard"} />
-        </ListItem>
-      </List>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleListItemClick("medium")}
+            className="button button--2"
+          >
+            Medium
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleListItemClick("hard")}
+            className="button button--3"
+          >
+            Hard
+          </Button>
+        </ButtonGroup>
+      </div>
     </Dialog>
   );
 }

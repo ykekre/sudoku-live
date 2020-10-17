@@ -6,7 +6,7 @@ export const NumpadContext = createContext();
 export const NumpadProvider = (props) => {
   const { numpadState, setNumpadState } = useNumPadState({
     isNumberSelected: false,
-    editMode: false,
+    editMode: true,
     value: 0,
     color: "default-color",
   });

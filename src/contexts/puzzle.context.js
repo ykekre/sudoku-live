@@ -275,6 +275,68 @@ export const PuzzleProvider = (props) => {
 
     setWrongInputCells(wrongCells);
   };
+
+  /**
+   * * Below function will be called when hint option is used. It will reveal the actual value of the cell which the user clicked
+   */
+  const revealCellValue = () => {
+    if (activeCell.length === 0) {
+      return;
+    }
+
+    const [i, j] = getCoordinates(activeCell);
+
+    if (!puzzle[i][j].isMutable) {
+      return;
+    }
+
+    const correctValue = solvedPuzzle[i][j];
+
+    setPuzzleState({
+      ...puzzleState,
+      puzzle: puzzle.map((row, rowIndex) => {
+        return row.map((cell, cellIndex) => {
+          if (rowIndex === i && cellIndex === j) {
+            return {
+              ...cell,
+              values: [correctValue],
+              valueColor: "",
+            };
+          } else return cell;
+        });
+      }),
+    });
+  };
+
+  /**
+   * * Below function will be called when clear option (backspace icon) is used. It will empty the active cell
+   */
+  const clearCellValue = () => {
+    if (activeCell.length === 0) {
+      return;
+    }
+
+    const [i, j] = getCoordinates(activeCell);
+
+    if (!puzzle[i][j].isMutable) {
+      return;
+    }
+
+    setPuzzleState({
+      ...puzzleState,
+      puzzle: puzzle.map((row, rowIndex) => {
+        return row.map((cell, cellIndex) => {
+          if (rowIndex === i && cellIndex === j) {
+            return {
+              ...cell,
+              values: [null],
+              valueColor: "",
+            };
+          } else return cell;
+        });
+      }),
+    });
+  };
   return (
     <PuzzleContext.Provider
       value={{
@@ -294,6 +356,8 @@ export const PuzzleProvider = (props) => {
         solvePuzzle,
         checkWrongUserInputs,
         wrongInputCells,
+        revealCellValue,
+        clearCellValue,
       }}
     >
       {props.children}
