@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import Puzzle from "../model/Puzzle";
 import useGameState from "../hooks/useGameState";
 import { v4 as uuidv4 } from "uuid";
@@ -15,6 +15,24 @@ export const GameProvider = (props) => {
     puzzleID: uuidv4(),
   });
 
+  const [snackBar, setSnackBar] = useState({
+    isOpen: false,
+    text: "",
+  });
+
+  const triggerSnackBarOpen = (message) => {
+    setSnackBar({
+      isOpen: true,
+      text: message,
+    });
+  };
+
+  const triggerSnackBarClose = () => {
+    setSnackBar({
+      isOpen: false,
+      text: "",
+    });
+  };
   const prepareForNewGame = () => {
     setGameState({
       ...gameState,
@@ -37,7 +55,16 @@ export const GameProvider = (props) => {
   };
   return (
     <GameContext.Provider
-      value={{ gameState, setGameState, startNewGame, prepareForNewGame }}
+      value={{
+        gameState,
+        setGameState,
+        startNewGame,
+        prepareForNewGame,
+        snackBar,
+
+        triggerSnackBarOpen,
+        triggerSnackBarClose,
+      }}
     >
       {props.children}
     </GameContext.Provider>

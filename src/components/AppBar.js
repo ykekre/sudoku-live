@@ -195,7 +195,7 @@ export default function HeaderBar() {
           </IconButton>
         </div>
         <Divider />
-        <Sidebar />
+        <Sidebar closeDrawer = {handleDrawerClose} />
       </Drawer>
     </div>
   );

@@ -248,6 +248,16 @@ export const PuzzleProvider = (props) => {
         });
       }),
     });
+
+    /**
+     * * cleanup: remove any highlights/styling from cells and give a fresh board to the user
+     */
+
+    setDuplicatePeerCells([]);
+    setSameValueCells([]);
+    setWrongInputCells([]);
+    setPeers([]);
+    setActiveCell("");
   };
 
   /**
@@ -281,13 +291,13 @@ export const PuzzleProvider = (props) => {
    */
   const revealCellValue = () => {
     if (activeCell.length === 0) {
-      return;
+      return 404;
     }
 
     const [i, j] = getCoordinates(activeCell);
 
     if (!puzzle[i][j].isMutable) {
-      return;
+      return 403;
     }
 
     const correctValue = solvedPuzzle[i][j];

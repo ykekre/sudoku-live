@@ -8,7 +8,6 @@ import { GameContext } from "../contexts/game.context";
 import "../styles/components/_dialogModal.scss";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles({
   root: {
@@ -29,53 +28,55 @@ function SimpleDialog(props) {
   };
 
   return (
-    <Dialog
-      onClose={handleClose}
-      aria-labelledby="simple-dialog-title"
-      open={open}
-      className={`${classes.root}`}
-    >
-      <div className="Dialog__container">
-        <DialogTitle id="simple-dialog-title" className="Dialog__title">
-          New Game
-        </DialogTitle>
-        <Typography variant="h4" gutterBottom className="Dialog__subheading">
-          Select Puzzle Difficulty
-        </Typography>
-        <ButtonGroup
-          variant="text"
-          color="primary"
-          aria-label="text primary button group"
-          className="Dialog__button__group"
-        >
-          <Button
-            variant="contained"
+    <>
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby="simple-dialog-title"
+        open={open}
+        className={`${classes.root}`}
+      >
+        <div className="Dialog__container">
+          <DialogTitle id="simple-dialog-title" className="Dialog__title">
+            New Game
+          </DialogTitle>
+          <Typography variant="h4" gutterBottom className="Dialog__subheading">
+            Select Puzzle Difficulty
+          </Typography>
+          <ButtonGroup
+            variant="text"
             color="primary"
-            onClick={() => handleListItemClick("easy")}
-            className="button button--1"
+            aria-label="text primary button group"
+            className="Dialog__button__group"
           >
-            Easy
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleListItemClick("easy")}
+              className="button button--1"
+            >
+              Easy
+            </Button>
 
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleListItemClick("medium")}
-            className="button button--2"
-          >
-            Medium
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleListItemClick("hard")}
-            className="button button--3"
-          >
-            Hard
-          </Button>
-        </ButtonGroup>
-      </div>
-    </Dialog>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleListItemClick("medium")}
+              className="button button--2"
+            >
+              Medium
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleListItemClick("hard")}
+              className="button button--3"
+            >
+              Hard
+            </Button>
+          </ButtonGroup>
+        </div>
+      </Dialog>
+    </>
   );
 }
 
@@ -90,6 +91,7 @@ export default function SelectPuzzleTypeDialog({ startGame }) {
 
   const [open, setOpen] = React.useState(gameState.showModal);
   const [selectedValue, setSelectedValue] = React.useState("easy");
+
   const handleClose = (value) => {
     setOpen(false);
     setSelectedValue(value);

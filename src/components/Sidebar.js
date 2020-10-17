@@ -10,9 +10,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
 }));
-export default function Sidebar() {
+export default function Sidebar({ closeDrawer }) {
   const classes = useStyles();
-  const { prepareForNewGame } = useContext(GameContext);
+  const { prepareForNewGame, triggerSnackBarOpen } = useContext(GameContext);
   const {
     resetPuzzle,
     solvePuzzle,
@@ -29,7 +29,7 @@ export default function Sidebar() {
         break;
       case "reset":
         resetPuzzle();
-
+        triggerSnackBarOpen(`Puzzle has been reset to initial state.`);
         break;
       case "solve":
         solvePuzzle();
@@ -42,7 +42,17 @@ export default function Sidebar() {
         break;
 
       case "reveal":
-        revealCellValue();
+        {
+          if (revealCellValue() === 404) {
+            triggerSnackBarOpen(
+              `You need to click on a blank cell to see it's value`
+            );
+          } else if (revealCellValue() === 403) {
+            triggerSnackBarOpen(
+              `You clicked on a pre-filled cell. Use this option to see true value of a blank cell`
+            );
+          }
+        }
 
         break;
       default:
@@ -75,7 +85,12 @@ export default function Sidebar() {
           id: "reveal",
         },
       ].map((option) => (
-        <Option selection={handleClick} option={option} key={option.id} />
+        <Option
+          selection={handleClick}
+          option={option}
+          key={option.id}
+          closeDrawer={closeDrawer}
+        />
       ))}
     </div>
   );
